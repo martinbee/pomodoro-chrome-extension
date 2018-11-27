@@ -11,6 +11,5 @@
     "default_popup": "index.html",
     "default_title": "Pomodoro"
   },
-  "background": { "scripts": ["handleOnClick.js"] },
   "version": "1.0"
 }
