@@ -1,14 +1,23 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
 
 const Display = ({
-  count,
-  increaseCount,
-}) => (
-  <div style={{ width: '200px', height: '400px', textAlign: 'center'}}>
-    <h2>{count}</h2>
-    <button onClick={increaseCount}>Count + 1</button>
-  </div>
-);
+  isTimerRunning,
+  toggleTimer,
+}) => {
+  const buttonMessage = isTimerRunning ? 'Stop' : 'Start';
+  
+  return (
+    <div style={{ width: '200px', height: '400px', textAlign: 'center'}}>
+      <button onClick={toggleTimer}>{buttonMessage}</button>
+    </div>
+  );
+};
+
+Display.propTypes = {
+  isTimerRunning: bool.isRequired,
+  toggleTimer: func.isRequired,
+};
 
 export default Display;
   

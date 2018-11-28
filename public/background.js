@@ -1,6 +1,6 @@
 /* global chrome */
-let state = {
-  count: 0,
+const state = {
+  isTimerRunning: false,
 };
 
 chrome.runtime.onConnect.addListener((port) => {
@@ -14,13 +14,15 @@ chrome.runtime.onConnect.addListener((port) => {
           payload: state,
         });
         break;
-      case 'increase':
-        state.count += 1; 
+        
+      case 'toggleTimer':
+        state.isTimerRunning = !state.isTimerRunning; 
         port.postMessage({
-          type: 'increase',
+          type: 'toggleTimer',
           payload: state,
         });
         break;
+        
       default:
         port.postMessage({
           type: 'default',

@@ -11,7 +11,10 @@ port.postMessage({ type: 'init' });
 
 port.onMessage.addListener(({ type, payload }) => {
   if (type === 'init') {
-    ReactDOM.render(<Container count={payload.count} isTimerActive={payload.isTimerActive} />, document.getElementById('root'));
+    ReactDOM.render(
+      <Container isTimerRunning={payload.isTimerRunning} port={port} />, 
+      document.getElementById('root')
+    );
   }
 });
 

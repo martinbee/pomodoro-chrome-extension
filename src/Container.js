@@ -1,29 +1,28 @@
 /* global chrome */
 import React, { Component } from 'react';
+import { shape, bool } from 'prop-types';
 
 import Display from './Display';
 
-const port = chrome.runtime.connect({ name: 'pomodoro-timer' });
-
 export default class Container extends Component {
+  static propTypes = {
+    isTimerRunning: bool.isRequired,
+    port: shape({}).isRequired,
+  };
+  
   state = {
-    count: this.props.count,
+    isTimerRunning: this.props.isTimerRunning,
   };
   
   componentWillMount() {
-    port.onMessage.addListener(({ type, payload }) => {
-      if (type !== 'init') {
-        console.log(payload);
-        this.setState(payload);
-      }
+    this.props.port.onMessage.addListener(({ type, payload }) => {
+      if (type === 'toggleTimer') this.setState({ isTimerRunning: payload.isTimerRunning });
     });
   }
   
-  increaseCount() {
-    port.postMessage({ type: 'increase' });
-  };
+  toggleTimer = () => this.props.port.postMessage({ type: 'toggleTimer' });
   
   render() {
-    return <Display count={this.state.count} increaseCount={this.increaseCount} />;
+    return <Display isTimerRunning={this.state.isTimerRunning} toggleTimer={this.toggleTimer} />;
   }
 };
