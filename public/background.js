@@ -1,34 +1,33 @@
 /* global chrome */
+const workDuration = 20;
+const breakDuration = 5;
 const state = {
   isTimerRunning: false,
   isWorkTimer: null,
 };
+let timer;
 
-const workDuration = 20;
-const breakDuration = 5;
+function startTimer() {
+  const message = state.isWorkTimer ? 'Take a break!' : 'Get back to work slacker!';
+  
+  timer = setTimeout(() => {
+    alert(message);
+    state.isWorkTimer = !state.isWorkTimer;
+    this.startTimer();
+  }, 5000);
+}
 
-const timerName = 'pomodoro-timer';
-
-const toggleTimer = () => {
+function toggleTimer() {
   if (state.isTimerRunning) {
-    chrome.alarms.clear(timerName);
+    clearTimeout(timer);
     state.isWorkTimer = null;
   } else {
-    chrome.alarms.create(timerName, { delayInMinutes: 1 });
     state.isWorkTimer = true;
+    startTimer();
   }
   
   state.isTimerRunning = !state.isTimerRunning;
-};
-
-chrome.alarms.onAlarm.addListener(({ name }) => {
-  if (name === timerName) {
-    const message = state.isWorkTimer ? 'Take a break!' : 'Get back to work slacker!';
-    
-    alert(message);
-    chrome.alarms.create(timerName, { delayInMinutes: 1 });
-  }
-});
+}
 
 chrome.runtime.onConnect.addListener((port) => {
   console.assert(port.name === 'pomodoro-timer');
