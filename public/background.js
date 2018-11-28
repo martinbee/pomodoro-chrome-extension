@@ -1,3 +1,4 @@
+/* global chrome */
 let state = {
   count: 0,
 };
@@ -8,14 +9,23 @@ chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(({ type }) => {
     switch (type) {
       case 'init':
-        port.postMessage(state);
+        port.postMessage({
+          type: 'init',
+          payload: state,
+        });
         break;
       case 'increase':
         state.count += 1; 
-        port.postMessage(state);
+        port.postMessage({
+          type: 'increase',
+          payload: state,
+        });
         break;
       default:
-        port.postMessage(state);
+        port.postMessage({
+          type: 'default',
+          payload: state,
+        });
         break;
     }
   });

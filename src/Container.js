@@ -7,15 +7,15 @@ const port = chrome.runtime.connect({ name: 'pomodoro-timer' });
 
 export default class Container extends Component {
   state = {
-    count: 0,
+    count: this.props.count,
   };
   
   componentWillMount() {
-    port.postMessage({ type: 'init' });
-    
-    port.onMessage.addListener((updatedState) => {
-      console.log(updatedState);
-      this.setState(updatedState);
+    port.onMessage.addListener(({ type, payload }) => {
+      if (type !== 'init') {
+        console.log(payload);
+        this.setState(payload);
+      }
     });
   }
   
