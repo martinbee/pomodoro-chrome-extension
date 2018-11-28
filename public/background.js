@@ -9,8 +9,14 @@ chrome.runtime.onConnect.addListener((port) => {
     switch (type) {
       case 'init':
         port.postMessage(state);
+        break;
+      case 'increase':
+        state.count += 1; 
+        port.postMessage(state);
+        break;
       default:
         port.postMessage(state);
+        break;
     }
   });
 });

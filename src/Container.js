@@ -19,7 +19,11 @@ export default class Container extends Component {
     });
   }
   
+  increaseCount() {
+    port.postMessage({ type: 'increase' });
+  };
+  
   render() {
-    return <Display count={this.state.count} />;
+    return <Display count={this.state.count} increaseCount={this.increaseCount} />;
   }
 };
