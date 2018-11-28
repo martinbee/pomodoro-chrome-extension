@@ -2,13 +2,15 @@ let state = {
   count: 0,
 };
 
-chrome.runtime.onMessage.addListener((msg, sender, response) => {
-  switch (msg.type) {
-    case 'init':
-      response(state);
-      break;
-    default:
-      response('unknown request');
-      break;
-  }
+chrome.runtime.onConnect.addListener((port) => {
+  console.assert(port.name === 'pomodoro-timer');
+  
+  port.onMessage.addListener(({ type }) => {
+    switch (type) {
+      case 'init':
+        port.postMessage(state);
+      default:
+        port.postMessage(state);
+    }
+  });
 });
