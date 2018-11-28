@@ -7,14 +7,19 @@ const state = {
 };
 let timer;
 
+function convertToMilliseconds(minutes) {
+  return minutes * 60 * 1000;
+}
+
 function startTimer() {
   const message = state.isWorkTimer ? 'Take a break!' : 'Get back to work slacker!';
+  const duration = state.isWorkTimer ? workDuration : breakDuration;
   
   timer = setTimeout(() => {
     alert(message);
     state.isWorkTimer = !state.isWorkTimer;
     this.startTimer();
-  }, 5000);
+  }, convertToMilliseconds(duration));
 }
 
 function toggleTimer() {

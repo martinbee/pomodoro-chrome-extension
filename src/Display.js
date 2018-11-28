@@ -1,6 +1,8 @@
 import React from 'react';
 import { bool, func } from 'prop-types';
 
+import './Display.css';
+
 const Display = ({
   isTimerRunning,
   toggleTimer,
@@ -8,7 +10,7 @@ const Display = ({
   const buttonMessage = isTimerRunning ? 'Stop' : 'Start';
   
   return (
-    <div style={{ width: '200px', height: '400px', textAlign: 'center'}}>
+    <div className="displayWrapper">
       <button onClick={toggleTimer}>{buttonMessage}</button>
     </div>
   );
