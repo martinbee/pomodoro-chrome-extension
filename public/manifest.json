@@ -11,5 +11,11 @@
     "default_popup": "index.html",
     "default_title": "Pomodoro"
   },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "alarms"
+  ],
   "version": "1.0"
 }

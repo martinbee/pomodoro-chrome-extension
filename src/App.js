@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-function convertMinutesToMilliseconds(minutes) {
-  return minutes * 60 * 1000;
-}
+const App = ({ count }) => {
+  const increaseCount = () => {
+    
+  };
+  
+  return (
+    <div>
+      <button onClick={increaseCount}>Increase</button>
+      <div>{count}</div>
+    </div>
+  );
+};
 
-class App extends Component {
+/*class App extends Component {
   state = {
     isActive: true,
     activeDuration: 25,
@@ -56,4 +65,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App;*/
